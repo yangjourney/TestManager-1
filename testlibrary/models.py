@@ -2,6 +2,7 @@ from django.db import models
 
 class Case(models.Model):
     case_text = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, default='TestCase')
     creation_date = models.DateTimeField('date published')
 
 class Step(models.Model):

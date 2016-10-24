@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ case.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ case.title }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>
+{% else %}
+<ul>
+    {% for step in case.step_set.all %}
+    <li>{{ step.step_text }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

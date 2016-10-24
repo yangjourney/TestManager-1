@@ -1,0 +1,10 @@
+{% if case_list %}
+    <ul>
+        {% for case in case_list %}
+            <li><a href="/testlibrary/{{ case.id}}/">{{ case.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No cases are available</p>
+{% endif %}
+<p><a href="{% url 'testlibrary:createcase' %}">Create a new case</a></p>
