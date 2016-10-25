@@ -6,10 +6,31 @@
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>
 {% else %}
-<ul>
-    {% for step in case.step_set.all %}
-    <li>{{ step.step_text }}</li>
-    {% endfor %}
-</ul>
+<form action="{% url 'testlibrary:updatecase' %}" method="post">
+	{% csrf_token %}
+	<p>Steps</p>
+	<table id="step_table">
+		<tr>
+			<th>Step</th>
+			<th>Expected Result</th>
+			<th>Order</th>
+		</tr>
+		{% for step in case.step_set.all %}
+		<tr>
+			<td><input name="step[{{ forloop.counter }}].step_text" type="text" value="{{ step.step_text }}" /></td>
+			<td><input name="step[{{ forloop.counter }}].expected_result" type="text" value="{{ step.result_text }}" /></td>
+			<td><input name="step[{{ forloop.counter }}].order" type="text" value="{{ step.order }}" /></td>
+			<td><a href="#">Delete</a></td>
+		</tr>
+		{% endfor %}
+	</table>
+	<p>
+		<a href="#">Add New Step</a>
+	</p>
+	<p>
+		<input type="submit" value="Save" />
+		<a href="#">Cancel</a>
+	</p>
+<form>
 {% endif %}
 {% endblock %}

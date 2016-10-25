@@ -1,0 +1,9 @@
+{% extends "detail.html"}
+{% block steps %}
+<p>Steps</p>
+<ul>
+    {% for step in case.step_set.all %}
+    <li>{{ step.step_text }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

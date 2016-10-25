@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
 <h1>Create a new case</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -7,4 +9,4 @@
     <input type="text" name="title" id="title" value="Enter a title" />
     <input type="submit" value="Create">
 </form>
-
+{% endblock %}

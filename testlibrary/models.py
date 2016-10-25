@@ -5,11 +5,14 @@ class Case(models.Model):
     title = models.CharField(max_length=200, default='TestCase')
     creation_date = models.DateTimeField('date published')
 
-class Step(models.Model):
+class Step(models.Model):		
     case = models.ForeignKey(Case, on_delete=models.CASCADE)
     step_text = models.CharField(max_length=200)
     result_text = models.CharField(max_length=200)
     order = models.IntegerField(default=0)
+	
+    class Meta:
+        ordering = ['order']
 
 
 # Create your models here.

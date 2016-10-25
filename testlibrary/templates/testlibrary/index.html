@@ -1,10 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
 {% if case_list %}
-    <ul>
+    <table>
+		<th>Test Case</th>
+		<th>Created Date</th>
         {% for case in case_list %}
-            <li><a href="/testlibrary/{{ case.id}}/">{{ case.title }}</a></li>
+            <tr>
+				<td><a href="{% url 'testlibrary:casedetail' case.id %}">{{ case.title }}</a></td>
+				<td>{{ case.creation_date }}</td>
+			</tr>
         {% endfor %}
-    </ul>
+    </table>
 {% else %}
     <p>No cases are available</p>
 {% endif %}
 <p><a href="{% url 'testlibrary:createcase' %}">Create a new case</a></p>
+{% endblock %}
