@@ -6,16 +6,30 @@
         <title>{% block title %}Test Manager{% endblock %}</title>
     </head>
     <body>
-        <div id="sidebar">
-            {% block sidebar %}
-            <ul style="list-style:none">
-                <li><a href="/testlibrary/">Home</a></li>
-            </ul>
-            {% endblock %}
-        </div>
-
-        <div id="content">
-            {% block content %}{% endblock %}            
-        </div>
+		<div id="page-container">			
+			<div id="header">
+				<h1>Test Manager</h1>
+			</div>
+			<div id="main-nav">
+				<ul>
+					<li><a href="{% url "testlibrary:index" %}">Test Cases</a></li>
+					<li><a href="#">Releases</a></li>
+					<li><a href="#">Dashboards</a></li>
+					<li><a href="#">Test Runner</a></li>
+				</ul>
+			</div>
+			<div id="content-container">
+				<div class="padding">
+				{% block content %}{% endblock %}
+				</div>				
+			</div>
+			<div id="footer">
+				<div id="altnav">
+					<a href="#">Test Manager</a>
+					<a href="#">Support</a>
+				</div>
+				Copyright © [Copyright Notice]
+			</div>
+		</div>
     </body>
 </html>

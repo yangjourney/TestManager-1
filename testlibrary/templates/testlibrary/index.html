@@ -1,18 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
+	<h2>Test Cases</h2>
 {% if case_list %}
-    <table>
-		<th>Test Case</th>
-		<th>Created Date</th>
-        {% for case in case_list %}
-            <tr>
-				<td><a href="{% url 'testlibrary:casedetail' case.id %}">{{ case.title }}</a></td>
-				<td>{{ case.creation_date }}</td>
-			</tr>
-        {% endfor %}
-    </table>
+    <div id="case-list" class="table">		
+			<header class="table-row table-header" id="case-list-header">
+			<div class="table-cell"><h3>Test Case<h3></div>
+			<div class="table-cell"><h3>Created Date<h3></div>
+			</header>
+			{% for case in case_list %}
+				<div class="table-row {% cycle 'even-row' 'odd-row' %}">
+					<div class="table-cell case-title"><a href="{% url 'testlibrary:casedetail' case.id %}">{{ case.title }}</a></div>
+					<div class="table-cell">{{ case.creation_date }}</div>
+				</div>
+			{% endfor %}		
+	</div>
 {% else %}
     <p>No cases are available</p>
 {% endif %}
-<p><a href="{% url 'testlibrary:createcase' %}">Create a new case</a></p>
+<div class="button-grid">
+	<input type="button" onclick="location.href='{% url 'testlibrary:createcase' %}';" value="Create a new case" />
+</div>
 {% endblock %}

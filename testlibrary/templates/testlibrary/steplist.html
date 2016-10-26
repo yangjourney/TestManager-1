@@ -1,8 +1,10 @@
 <h3>Steps</h3>
-	<table id="step_table">
-	<th>Test Step</th>
-	<th>Expected Result</th>
-	<th>Order</th>
+	<div class="table editable-table" id="step_table">
+	<header class="table-row table-header">
+		<div class="table-cell">Test Step</div>
+		<div class="table-cell">Expected Result</div>
+		<div class="table-cell">Order</div>
+	</header>
 	{% for step_form in step_formset %}
 	{% if step_form.errors %}
 	{% for field in step_form %}
@@ -14,19 +16,20 @@
 	
 	{{ step_form.non_field_errors }}
 	{{ step_form.id }}
-				<tr>					
-					<td>{{ step_form.step_text }}</td>
-					<td>{{ step_form.result_text }}</td>
-					<td>{{ step_form.order }}</td>
+				<div class="table-row {% cycle 'even-row' 'odd-row' %}">					
+					<div class="table-cell">{{ step_form.step_text }}</div>
+					<div class="table-cell">{{ step_form.result_text }}</div>
+					<div class="table-cell">{{ step_form.order }}</div>
 					{% if formset.can_delete %}
-					<td>{{ step_form.DELETE }}</td>
+					<div class="table-cell">{{ step_form.DELETE }}</div>
 					{% endif %}
-				</tr>
+				</div>
 	{% endfor %}
-	</table>
+	</div>
 	<input type="button" value="Add Step" onclick="AddStep()"/>
 	<script>
 	function AddStep(){
+		/*
 		mgmt_form = document.getElementById("id_steps-TOTAL_FORMS");
 		step_count = parseInt(mgmt_form.value) + 1
 		mgmt_form.value = step_count;
@@ -38,6 +41,7 @@
 		cell1.innerHTML = '<input type="text" id="id_steps-'+step_count+'-step_text" maxlength="200" name="steps-'+step_count+'-step_text" />';
 		cell2.innerHTML = '<input type="text" id="id_steps-'+step_count+'-result_text" maxlength="200" name="steps-'+step_count+'-result_text" />';
 		cell3.innerHTML = '<input type="number" id="id_steps-'+step_count+'-order" name="id_steps-'+step_count+'-order" value="'+step_count+'" />';
+		*/
 	}
 	</script>
 	
