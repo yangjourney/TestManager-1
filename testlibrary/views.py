@@ -51,21 +51,20 @@ def case_form(request, case_id):
 	args = {'case': case}
 	# if this is a POST request we need to process the form data
 	if request.method == 'POST':
-		print(str(request.POST))
-		test_file = open('test.log', 'a')
-		with test_file:
-			print(str(request.POST), file=test_file)
 		# create a form instance and populate it with data from the request
 		form = CaseForm(request.POST, instance=case, prefix='master')
 		formset = case_form_set(request.POST, request.FILES, instance=case, prefix='steps')
 			
 		if form.is_valid() and formset.is_valid():
 			try:
-				form.save()		
+				case.version += 1
+				form.save()
 				formset.save()					
-				return HttpResponseRedirect(reverse('testlibrary:index'))
+				return HttpResponseRedirect(reverse('testlibrary:casedetail', kwargs={'case_id': case.id}))
 			except:
+				# TODO: better error handling
 				print('exception when saving data')
+				raise
 		else:
 			print('One of the forms did not pass validaiton')
 			print(formset.errors)
