@@ -9,14 +9,14 @@
 	{% if step_form.errors %}
 	{% for field in step_form %}
 		{% for error in field.errors %}
-		 <p>{{error|escape}}</p>
+		 <p>{{ field.label_tag }} <br/> {{error|escape}}</p>
 		 {% endfor %}
 		{% endfor %}
 	{% endif %}
 	
 	{{ step_form.non_field_errors }}
-	{{ step_form.id }}
-				<div class="table-row {% cycle 'even-row' 'odd-row' %}">					
+				<div class="table-row {% cycle 'even-row' 'odd-row' %}">
+					{{ step_form.id }}
 					<div class="table-cell">{{ step_form.step_text }}</div>
 					<div class="table-cell">{{ step_form.result_text }}</div>
 					<div class="table-cell">{{ step_form.order }}</div>
@@ -29,19 +29,33 @@
 	<input type="button" value="Add Step" onclick="AddStep()"/>
 	<script>
 	function AddStep(){
-		/*
-		mgmt_form = document.getElementById("id_steps-TOTAL_FORMS");
-		step_count = parseInt(mgmt_form.value) + 1
-		mgmt_form.value = step_count;
-		var table = document.getElementById("step_table");
-		var row = table.insertRow(-1)
-		var cell1 = row.insertCell(0);
-		var cell2 = row.insertCell(1);
-		var cell3 = row.insertCell(2);
-		cell1.innerHTML = '<input type="text" id="id_steps-'+step_count+'-step_text" maxlength="200" name="steps-'+step_count+'-step_text" />';
-		cell2.innerHTML = '<input type="text" id="id_steps-'+step_count+'-result_text" maxlength="200" name="steps-'+step_count+'-result_text" />';
-		cell3.innerHTML = '<input type="number" id="id_steps-'+step_count+'-order" name="id_steps-'+step_count+'-order" value="'+step_count+'" />';
-		*/
+		
+		mgmt_form = document.getElementById("id_steps-TOTAL_FORMS");		
+		step_count = parseInt(mgmt_form.value)
+		var step_table = document.getElementById('step_table');
+		var step_row = document.createElement('div');
+		step_row.className = 'table-row';
+		var id_input = document.createElement('input');
+		id_input.id = 'id_steps-'+step_count+'-id';
+		id_input.name = 'steps-'+step_count+'-id';
+		id_input.type = 'hidden';
+		var text_div = document.createElement('div');
+		text_div.className = 'table-cell';
+		var results_div = document.createElement('div');
+		results_div.className = 'table-cell';
+		var order_div = document.createElement('div');
+		order_div.className = 'table-cell';
+		
+		text_div.innerHTML = '<input type="text" id="id_steps-'+step_count+'-step_text" maxlength="200" name="steps-'+step_count+'-step_text" />';
+		results_div.innerHTML = '<input type="text" id="id_steps-'+step_count+'-result_text" maxlength="200" name="steps-'+step_count+'-result_text" />';
+		order_div.innerHTML = '<input type="number" id="id_steps-'+step_count+'-order" name="steps-'+step_count+'-order" value="'+step_count+'" />';
+		step_row.appendChild(id_input);
+		step_row.appendChild(text_div);
+		step_row.appendChild(results_div);
+		step_row.appendChild(order_div);
+		step_table.appendChild(step_row);
+		
+		mgmt_form.value = step_count + 1;
 	}
 	</script>
 	

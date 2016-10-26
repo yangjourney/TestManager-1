@@ -50,23 +50,14 @@ def case_form(request, case_id):
 	case_form_set = inlineformset_factory(Case, Step, fields=('step_text','result_text','order',), extra=0)
 	args = {'case': case}
 	# if this is a POST request we need to process the form data
-	if request.method == 'POST':		
+	if request.method == 'POST':
 		print(str(request.POST))
-		
+		test_file = open('test.log', 'a')
+		with test_file:
+			print(str(request.POST), file=test_file)
 		# create a form instance and populate it with data from the request
 		form = CaseForm(request.POST, instance=case, prefix='master')
 		formset = case_form_set(request.POST, request.FILES, instance=case, prefix='steps')
-		
-		# check whether the form is valid
-		try:
-			if form.is_valid():
-				print('forms are valid')
-			if formset.is_valid():
-				print('other form valid')
-		except:
-			print('exception when validating forms')
-			print(formset.errors)			
-			return HttpResponse('Something went wrong')
 			
 		if form.is_valid() and formset.is_valid():
 			try:
@@ -76,13 +67,14 @@ def case_form(request, case_id):
 			except:
 				print('exception when saving data')
 		else:
+			print('One of the forms did not pass validaiton')
+			print(formset.errors)
 			try:
 				args['form'] = form				
 				args['step_formset'] = formset
 			except:
 				print('exception when setting values')
-			print(form.errors)
-			print(formset.errors)
+
 			return render(request, 'testlibrary/casedetail.html', args)
 	# if a GET method, create a blank form
 	else:		
