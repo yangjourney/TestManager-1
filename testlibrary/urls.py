@@ -10,4 +10,5 @@ urlpatterns = [
         url(r'^submitnewcase/$',views.submitnewcase, name='submitnewcase'),
 		url(r'^updatecase/(?P<pk>[0-9]+)/$',views.updatecase, name='updatecase'),
 		url(r'^deletecase/(?P<pk>[0-9]+)/$', views.deletecase, name='deletecase'),
+		url(r'^testrunner/$', views.runnerindex, name='runnerindex'),
     ]

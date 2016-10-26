@@ -38,10 +38,8 @@ def updatecase(request, pk):
 	if request.method == 'POST':
 		case_form = CaseForm(request.POST, instance=Case.objects.get(pk=pk))
 		if case_form.is_valid():
-			case_form.save()
-		
-			return HttpResponseRedirect(reverse('testlibrary:index'))
-			
+			case_form.save()		
+			return HttpResponseRedirect(reverse('testlibrary:index'))			
 	return HttpResponse(str(request.POST.keys()) + str(request.POST.values()))
 	
 
@@ -85,4 +83,7 @@ def deletecase(request, pk):
 	case = Case.objects.get(pk=pk)
 	case.delete()
 	return HttpResponseRedirect(reverse('testlibrary:index'))
+	
+def runnerindex(request):
+	return render(request, 'testlibrary/runnerindex.html')
 	
