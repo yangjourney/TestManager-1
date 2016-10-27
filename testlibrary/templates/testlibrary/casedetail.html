@@ -6,7 +6,7 @@
 	{% csrf_token %}
 	<div class="section-container">
 		<h2>{{ case.title }}</h2>
-		<h3>Version {{ case.version }}<h3>
+		<h3>Version {{ form.versions }}</h3>
 		<div class="table">
 			{{ form.non_field_errors }}
 			<div class="table-row">

@@ -4,10 +4,18 @@ class Case(models.Model):
     case_text = models.CharField(max_length=200)
     title = models.CharField(max_length=200, default='TestCase')
     creation_date = models.DateTimeField('date published')
-    version = models.IntegerField(default=1)
+    version = models.IntegerField(default=1)	
 
+class CaseHistory(models.Model):
+	revision_number = models.IntegerField(default=1)
+	case = models.ForeignKey('Case', on_delete=models.CASCADE)
+	
+	def __str__(self):
+		return str(self.revision_number)	
+	
 class Step(models.Model):		
-    case = models.ForeignKey(Case, on_delete=models.CASCADE)
+    case = models.ForeignKey(Case)
+    case_version = models.ForeignKey(CaseHistory, default=1)
     step_text = models.CharField(max_length=200)
     result_text = models.CharField(max_length=200)
     order = models.IntegerField(default=0)
@@ -32,4 +40,3 @@ class Release(models.Model):
 	
 	status = models.CharField(max_length=30, choices=STATUS_CHOICES, default='scheduled')
 	
-# Create your models here.

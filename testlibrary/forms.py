@@ -12,8 +12,13 @@ class CaseForm(ModelForm):
 		widgets = {
 			'case_text': Textarea(attrs={'cols': 80, 'rows':3})
 		}
+		
+	versions = forms.ModelChoiceField(
+		queryset=CaseHistory.objects.all().order_by('revision_number'),
+		empty_label = None
+	)
 
 class ReleaseForm(ModelForm):
 	class Meta:
 		model = Release
-		fields = ['label', 'major_number', 'minor_number', 'status', 'release_date']
+		fields = ['label', 'major_number', 'minor_number', 'status', 'release_date',]

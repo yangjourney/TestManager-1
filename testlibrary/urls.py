@@ -14,4 +14,5 @@ urlpatterns = [
 		url(r'^release/new/$', views.createrelease, name='createrelease'),
 		url(r'^release/(?P<pk>[0-9]+)/$', views.ReleaseDetailView.as_view(), name='releasedetail'),
 		url(r'^release/delete/(?P<pk>[0-9]+)/$', views.delete_release, name='delete-release'),
+		url(r'^(?P<case_id>[0-9]+)/revision/(?P<revision_number>[0-9]+)/$', views.case_form, name='case-revision'),
     ]
