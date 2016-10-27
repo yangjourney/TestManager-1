@@ -19,8 +19,25 @@ class DetailView(generic.DetailView):
     model = Case
     template_name = 'testlibrary/detail.html'
 
+class ReleaseList(generic.ListView):
+		model = Release
+	
+class ReleaseDetailView(generic.DetailView):
+	model = Release			
+	
 def createcase(request):
     return render(request, 'testlibrary/createcase.html')
+
+def createrelease(request):
+	if request.method == 'POST':
+		form = ReleaseForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(reverse('testlibrary:releaseindex'))
+		else:
+			return render(request, 'testlibrary/createrelease.html', {'form': form})
+	form = ReleaseForm()
+	return render(request, 'testlibrary/createrelease.html', {'form': form})
 
 def submitnewcase(request):
     c = Case()
@@ -44,7 +61,13 @@ def updatecase(request, pk):
 			
 	return HttpResponse(str(request.POST.keys()) + str(request.POST.values()))
 	
-
+def release_form(request, release_id):
+	args = {}
+	if request.method == 'POST':
+		return HttpResponseRedirect(reverse('testlibrary:index'))
+	else:
+		return render(request, 'testlibrary/releasedetail.html', args)
+	
 def case_form(request, case_id):
 	case = Case.objects.get(pk=case_id)
 	case_form_set = inlineformset_factory(Case, Step, fields=('step_text','result_text','order',), extra=0)
@@ -85,4 +108,8 @@ def deletecase(request, pk):
 	case = Case.objects.get(pk=pk)
 	case.delete()
 	return HttpResponseRedirect(reverse('testlibrary:index'))
+	
+def delete_release(request, pk):
+	Release.objects.get(pk=pk).delete()
+	return HttpResponseRedirect(reverse('testlibrary:releaseindex'))
 	

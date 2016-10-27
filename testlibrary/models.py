@@ -16,4 +16,20 @@ class Step(models.Model):
         ordering = ['order']
 
 
+class Release(models.Model):
+	release_date = models.DateField()
+	label = models.CharField(max_length=100)
+	major_number = models.CharField(max_length=10)
+	minor_number = models.CharField(max_length=10)
+	
+	#TODO: separate user-defined values for status into a different table
+	STATUS_CHOICES = (
+		('scheduled', 'Scheduled'),
+		('in_progress', 'In Progress'),
+		('complete', 'Complete'),
+		('deployed', 'Deployed'),
+	)
+	
+	status = models.CharField(max_length=30, choices=STATUS_CHOICES, default='scheduled')
+	
 # Create your models here.

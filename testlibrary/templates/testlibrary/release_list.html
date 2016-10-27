@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2>Releases</h2>
+	<div id="case-list" class="table">		
+			<header class="table-row table-header" id="case-list-header">
+			<div class="table-cell"><h3>Label<h3></div>
+			<div class="table-cell"><h3>Version Number<h3></div>
+			<div class="table-cell"><h3>Status</h3></div>
+			</header>
+			{% for release in object_list %}
+				<div class="table-row {% cycle 'even-row' 'odd-row' %}">
+					<div class="table-cell case-title"><a href="{% url 'testlibrary:releasedetail' release.id %}">{{ release.label }}</a></div>
+					<div class="table-cell">{{ release.major_number }}.{{ release.minor_number }}</div>
+					<div class="table-cell">{{ release.status }}</div>
+				</div>
+			{% endfor %}		
+	</div>
+	<div class="button-grid">
+		<input type="button" onclick="location.href='{% url 'testlibrary:createrelease' %}';" value="Create a New Release" />
+	</div>
+{% endblock %}

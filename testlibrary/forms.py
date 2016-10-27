@@ -11,4 +11,9 @@ class CaseForm(ModelForm):
 		fields = ['creation_date', 'title', 'case_text']
 		widgets = {
 			'case_text': Textarea(attrs={'cols': 80, 'rows':3})
-		}		
+		}
+
+class ReleaseForm(ModelForm):
+	class Meta:
+		model = Release
+		fields = ['label', 'major_number', 'minor_number', 'status', 'release_date']
