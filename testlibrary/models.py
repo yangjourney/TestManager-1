@@ -16,7 +16,7 @@ class Case(BusinessObject):
     title = models.CharField(max_length=200, default='TestCase')
     creation_date = models.DateTimeField('date published')
     version = models.IntegerField(default=1)
-    case_type = models.ForeignKey('CaseType', null=True)
+    case_type = models.ForeignKey('CaseType')
 
 class CaseHistory(BusinessObject):
 	revision_number = models.IntegerField(default=1)

@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 	<h2>Test Cases</h2>
+{% if messages %}
+    <div class="message alert">{{ messages }}</div>
+{% endif %}
 {% if case_list %}
     <div id="case-list" class="table">		
 			<header class="table-row table-header" id="case-list-header">

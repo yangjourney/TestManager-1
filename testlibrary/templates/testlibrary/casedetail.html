@@ -8,7 +8,14 @@
 		<h2>{{ case.title }}</h2>
 		<h3>Version {{ form.versions }}</h3>		
 		<div class="table">
-			{{ form.non_field_errors }}
+			{{ form.non_field_errors }}				
+				{% if form.errors %}
+					{% for field in form.errors %}
+						{% for error in field.errors %}
+						 <p>{{ field.label_tag }} <br/> {{error|escape}}</p>
+						{% endfor %}
+					{% endfor %}
+				{% endif %}
 			<div class="table-row">
 				<div class="table-cell">{{ form.title.label_tag }}</div>
 				<div class="table-cell">{{ form.title }}</div>
