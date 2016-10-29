@@ -12,12 +12,14 @@ class CaseForm(ModelForm):
 		widgets = {
 			'case_text': Textarea(attrs={'cols': 80, 'rows':3})
 		}
-		
+	
+	versions = forms.ChoiceField()
+	'''
 	versions = forms.ModelChoiceField(
 		queryset=CaseHistory.objects.all().order_by('revision_number'),
 		empty_label = None
 	)
-
+	'''
 class ReleaseForm(ModelForm):
 	class Meta:
 		model = Release

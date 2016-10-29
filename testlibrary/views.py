@@ -76,12 +76,13 @@ def GetLatestRevision(case):
 	latest_revision = CaseHistory.objects.filter(case=case).count()
 	return CaseHistory.objects.filter(case=case).filter(revision_number=latest_revision)[0]
 
-def case_form(request, case_id, revision_number = None):
+def case_form(request, case_id):
 	case = Case.objects.get(pk=case_id)
 	case_form_set = inlineformset_factory(Case, Step, fields=('step_text','result_text','order'), extra=0)	
 	args = {'case': case}
 	default_history = None
-	latest_revision = CaseHistory.objects.filter(case=case).count()
+	latest_revision = CaseHistory.objects.filter(case=case).count()	
+	revision_number = request.GET.get('revision')	
 	if revision_number:
 		if int(revision_number) > latest_revision:
 			default_history = GetLatestRevision(case)
@@ -90,9 +91,7 @@ def case_form(request, case_id, revision_number = None):
 	else:
 		latest_revision = CaseHistory.objects.filter(case=case).count()
 		default_history = CaseHistory.objects.filter(case=case).filter(revision_number=latest_revision)[0]
-	print(str(default_history.case))
-	print('case {0!s} has {1!s} revisions'.format(case_id, latest_revision))
-	print('default history is {!s}'.format(str(default_history)))
+
 	# if this is a POST request we need to process the form data
 	if request.method == 'POST':
 		# create a form instance and populate it with data from the request
@@ -129,8 +128,8 @@ def case_form(request, case_id, revision_number = None):
 			return render(request, 'testlibrary/casedetail.html', args)
 	# if a GET method, create a blank form
 	else:		
-		form = CaseForm(instance=case, prefix='master')
-		form.fields['versions'].queryset = CaseHistory.objects.filter(case=case)
+		form = CaseForm(instance=case, prefix='master', initial={'versions':default_history})
+		form.fields['versions'].choices = [(x,x) for x in range(1, latest_revision+1)]
 		#formset = case_form_set(instance=case, prefix='steps')
 		print('Test queryset: {!s}'.format(Step.objects.filter(case=case).filter(case_version=default_history)))
 		formset = case_form_set(instance=case, queryset=Step.objects.filter(case_version=default_history), prefix='steps')
