@@ -6,7 +6,7 @@
 	{% csrf_token %}
 	<div class="section-container">
 		<h2>{{ case.title }}</h2>
-		<h3>Version {{ form.versions }}</h3>
+		<h3>Version {{ form.versions }}</h3>		
 		<div class="table">
 			{{ form.non_field_errors }}
 			<div class="table-row">
@@ -35,4 +35,10 @@
 		<input type="button" value="Delete Test Case" onclick="location.href='{% url 'testlibrary:deletecase' case.id %}';" />
 	</div>
 </form>
+<script>
+	version_selector = document.getElementById("id_master-versions");
+	version_selector.addEventListener("change", function () {
+		location.href="{% url 'testlibrary:casedetail' case.id %}?revision="+version_selector[version_selector.selectedIndex].value;
+	});
+</script>
 {% endblock %}
