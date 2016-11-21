@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<form action="{% url 'testlibrary:createcase' %}" method='post'>	
+	{% csrf_token %}
+	<div class="section-container">
+		<h2>{{ case.title }}</h2>
+		<!--<h3>Version {{ form.versions }}</h3>-->
+		<div class="table">
+			{{ form.non_field_errors }}		
+				{% if form.errors %}
+					{% for field in form.errors %}
+						{% for error in field.errors %}
+						 <p>{{ field.label_tag }} <br/> {{error|escape}}</p>
+						{% endfor %}
+					{% endfor %}
+				{% endif %}
+			<div class="table-row">
+				<div class="table-cell">{{ form.title.label_tag }}</div>
+				<div class="table-cell">{{ form.title }}</div>
+			</div>
+            <div class="table-row">
+				<div class="table-cell">{{ form.case_type.label_tag }}</div>
+				<div class="table-cell">{{ form.case_type }}</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">{{ form.creation_date.label_tag }}</div>
+				<div class="table-cell">{{ form.creation_date }}</div>
+			</div>
+			<div class="table-row">
+				<div class="table-cell">{{ form.case_text.label_tag }}</div>
+				<div class="table-cell">{{ form.case_text }}</div>
+			</div>
+		</div>
+	</div>
+	<div class="button-grid">
+		<input type="submit" value="Submit" />
+		<input type="button" value="Delete Test Case" onclick="#" />
+	</div>
+</form>
+<script>
+	/*version_selector = document.getElementById("id_master-versions");
+	version_selector.addEventListener("change", function () {
+		location.href="#";
+	});*/
+</script>
+{% endblock %}
