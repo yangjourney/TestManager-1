@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<form action="{% url 'testlibrary:casedetail' case.id %}" method='post'>
-	{{ step_formset.management_form }}
+<form action="{% url 'testlibrary:createcase' %}" method='post'>	
 	{% csrf_token %}
 	<div class="section-container">
 		<h2>{{ case.title }}</h2>
-		<h3>Version {{ form.versions }}</h3>		
+		<!--<h3>Version {{ form.versions }}</h3>-->
 		<div class="table">
-			{{ form.non_field_errors }}				
+			{{ form.non_field_errors }}		
 				{% if form.errors %}
 					{% for field in form.errors %}
 						{% for error in field.errors %}
@@ -34,18 +33,15 @@
 			</div>
 		</div>
 	</div>
-	<div class="section-container">
-		{% include "testlibrary/steplist.html" %}
-	</div>
 	<div class="button-grid">
 		<input type="submit" value="Submit" />
-		<input type="button" value="Delete Test Case" onclick="location.href='{% url 'testlibrary:deletecase' case.id %}';" />
+		<input type="button" value="Delete Test Case" onclick="#" />
 	</div>
 </form>
 <script>
-	version_selector = document.getElementById("id_master-versions");
+	/*version_selector = document.getElementById("id_master-versions");
 	version_selector.addEventListener("change", function () {
-		location.href="{% url 'testlibrary:casedetail' case.id %}?revision="+version_selector[version_selector.selectedIndex].value;
-	});
+		location.href="#";
+	});*/
 </script>
 {% endblock %}

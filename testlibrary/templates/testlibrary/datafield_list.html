@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2>Data Fields</h2>
+	<div id="case-list" class="table">		
+			<header class="table-row table-header" id="case-list-header">
+			<div class="table-cell"><h3>Data Field<h3></div>
+			</header>
+			{% for obj in object_list %}
+				<div class="table-row {% cycle 'even-row' 'odd-row' %}">
+					<div class="table-cell case-title"><a href="{% url 'testlibrary:data-field-detail' obj.id %}">{{ obj.title }}</a></div>
+				</div>
+			{% endfor %}		
+	</div>
+{% endblock %}

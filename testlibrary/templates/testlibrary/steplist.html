@@ -4,6 +4,10 @@
 		<div class="table-cell">Test Step</div>
 		<div class="table-cell">Expected Result</div>
 		<div class="table-cell">Order</div>
+		{% if formset.can_delete %}
+		<div class="table-cell">Delete</div>
+		{% endif %}
+		<div class="table-cell">Version</div>
 	</header>
 	{% for step_form in step_formset %}
 	{% if step_form.errors %}
@@ -23,6 +27,9 @@
 					{% if formset.can_delete %}
 					<div class="table-cell">{{ step_form.DELETE }}</div>
 					{% endif %}
+					<!-- Debug only -->
+					<div class="table-cell">{{ step_form.case_version }}</div>
+					
 				</div>
 	{% endfor %}
 	</div>

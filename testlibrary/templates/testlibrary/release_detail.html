@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ object.label }} - {{ object.status }}</h2>
+<h3>{{ object.release_date }}</h3>
+<input type="button" value="Delete Release" onclick="location.href='{% url 'testlibrary:delete-release' object.id %}';" />
+{% endblock %}
