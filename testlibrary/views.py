@@ -4,7 +4,7 @@ from django.views import generic
 from django.utils import timezone
 from django.urls import reverse
 from django.forms import inlineformset_factory
-from .models import Case, Step
+from .models import Case, Step, DataField, DataSet
 import sys
 from .forms import *
 
@@ -24,6 +24,18 @@ class ReleaseList(generic.ListView):
 	
 class ReleaseDetailView(generic.DetailView):
 	model = Release			
+
+class DataFieldView(generic.DetailView):
+	model = DataField
+
+class DataFieldIndex(generic.ListView):
+	model = DataField
+	
+class DataSetView(generic.DetailView):
+	model = DataSet
+
+class DataSetIndex(generic.ListView):
+	model = DataSet
 	
 def createcase(request):
     return render(request, 'testlibrary/createcase.html')

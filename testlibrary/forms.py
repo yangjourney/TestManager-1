@@ -23,7 +23,10 @@ class CaseForm(ModelForm):
         super(CaseForm, self).save(*args, **kwargs)
         
     
-    
+class DataFieldForm(ModelForm):
+	class Meta:
+		model = DataField
+		fields = ['title', 'data_type']
     
 class ReleaseForm(ModelForm):
 	class Meta:
