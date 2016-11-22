@@ -26,7 +26,15 @@ class DataSetAdmin(admin.ModelAdmin):
 
 class DataFieldAdmin(admin.ModelAdmin):
 	fields = ['title', 'data_type']
-	
+
+class TestResultAdmin(admin.ModelAdmin):
+	fields = ['start_time', 'end_time', 'case', 'result']
+
+class TestRunAdmin(admin.ModelAdmin):
+	fields = ['test_cases', 'title', 'start_date', 'end_date', 'status', 'test_results']
+
+admin.site.register(TestRun, TestRunAdmin)	
+admin.site.register(TestResult, TestResultAdmin)
 admin.site.register(Case, CaseAdmin)
 admin.site.register(CaseType, CaseTypeAdmin)
 admin.site.register(Step, StepAdmin)

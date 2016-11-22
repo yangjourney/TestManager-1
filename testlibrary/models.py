@@ -35,7 +35,7 @@ class DataSet(BusinessObject):
 class Case(BusinessObject):
 	case_text = models.CharField(max_length=200)
 	title = models.CharField(max_length=200, default='TestCase')
-	creation_date = models.DateTimeField('date published')
+	creation_date = models.DateTimeField('date published', auto_now_add = True)
 	version = models.IntegerField(default=1)
 	case_type = models.ForeignKey('CaseType', null=True)
 	data_sets = models.ManyToManyField(DataSet)
@@ -76,3 +76,47 @@ class Release(BusinessObject):
 	)
 	
 	status = models.CharField(max_length=30, choices=STATUS_CHOICES, default='scheduled')
+	
+
+class TestRun(BusinessObject):
+	title = models.CharField(max_length=200)
+	start_date = models.DateTimeField()
+	end_date = models.DateTimeField(null=True)
+	test_cases = models.ManyToManyField(Case)	
+	STATUS_CHOICES = (
+		('created', 'Created'),
+		('scheduled', 'Scheduled'),
+		('in_progress', 'In Progress'),
+		('complete', 'Complete'),
+		('cancelled', 'Cancelled'),
+	)
+	
+	status = models.CharField(max_length = 50, default='Created', choices = STATUS_CHOICES)
+	
+	def CreateResults(self):
+		for test_case in self.test_cases.all():
+			print('Creating results for the included test cases')
+			tr = TestResult(case=test_case, test_run=self)
+			try:
+				tr.save()				
+			except ValueError as e:
+				print('There was a Value error:\n{!s}'.format(e))		
+	
+class TestResult(BusinessObject):
+	case = models.ForeignKey('case')
+	start_time = models.DateTimeField(null=True)
+	end_time = models.DateTimeField(null=True)
+	test_run = models.ForeignKey(TestRun, default=1)
+		
+	RESULT_CHOICES = (
+		('scheduled','Scheduled'),
+		('pass','Pass'),
+		('fail','Fail'),
+		('blocked','Blocked'),
+		('warn','Warn'),
+		('skipped','Skipped'),
+		('paused','Paused')	
+	)
+	
+	result = models.CharField(max_length = 50, default='Scheduled', choices = RESULT_CHOICES)
+	

@@ -13,7 +13,7 @@ class CaseForm(ModelForm):
 	
     class Meta:
         model = Case
-        fields = ['creation_date', 'title', 'case_text', 'case_type']
+        fields = ['title', 'case_text', 'case_type']
         widgets = {'case_text': Textarea(attrs={'cols': 80, 'rows':3})}
 	
     def save(self, *args, **kwargs):
